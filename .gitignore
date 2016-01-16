@@ -1,0 +1,10 @@
+*.exe
+labeler/labeler.v11.suo
+labeler/labeler.opensdf
+labeler/labeler.sdf
+labeler/Release/*
+labeler/Debug/*
+labeler/*/Release/*
+labeler/*/Debug/*
+labeler/*/*/Release/*
+labeler/*/*/Debug/*
