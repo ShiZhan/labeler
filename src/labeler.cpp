@@ -24,6 +24,7 @@ uint64_t dict_load(const char *dict_file, dict_t &dict) {
 				if (id > max) max = id;
 			}
 			dict_fs.close();
+			max++;
 		}
 	}
 	return max;
@@ -48,10 +49,7 @@ void permutate(dict_t &dict, uint64_t &id, char seperator) {
 		std::string token;
 		while (getline(ss, token, seperator)) {
 			auto itr = dict.find(token);
-			if (itr == dict.end()) {
-				id++;
-				dict[token] = id;
-			}
+			if (itr == dict.end()) dict[token] = id++;
 			std::cout << dict[token] << " ";
 		}
 		std::cout << std::endl;
