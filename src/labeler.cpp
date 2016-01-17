@@ -56,7 +56,30 @@ void permutate(dict_t &dict, uint64_t &id, char seperator) {
 	}
 }
 
-int main (int argc, char* argv[]) {
+void permutate(const char *input_file, dict_t &dict, uint64_t &id, char seperator) {
+	if (input_file) {
+		std::string output_file(input_file); output_file += "-mapped";
+		std::ifstream ifs(input_file);
+		std::ofstream ofs(output_file);
+		if(ifs && ofs) {
+			std::string line;
+			while (getline(ifs, line)) {
+				std::stringstream ss(line);
+				std::string token;
+				while (getline(ss, token, seperator)) {
+					auto itr = dict.find(token);
+					if (itr == dict.end()) dict[token] = id++;
+					ofs << dict[token] << " ";
+				}
+				ofs << std::endl;
+			}
+		}
+		ofs.close();
+		ifs.close();
+	}
+}
+
+int main(int argc, char* argv[]) {
 	using namespace std;
 	using namespace opt;
 
@@ -64,18 +87,20 @@ int main (int argc, char* argv[]) {
 		cout << "labeler [options]" << endl
 			<< " -h:\t ask for help" << endl
 			<< " -d:\t dictionary" << endl
-			<< " -s:\t seperator" << endl;
+			<< " -s:\t seperator" << endl
+			<< " -i:\t input file" << endl;
 		return 0;
 	}
 
 	char* dict_file = getOption(argv, argv + argc, "-d");
 	char* seperator = getOption(argv, argv + argc, "-s");
+	char* input_file = getOption(argv, argv + argc, "-i");
 
 	dict_t dict;
 	uint64_t id = dict_load(dict_file, dict);
 
 	char s = seperator ? seperator[0] : ' ';
-	permutate(dict, id, s);
+	if (input_file) permutate(input_file, dict, id, s); else permutate(dict, id, s);
 
 	dict_store(dict_file, dict);
 
