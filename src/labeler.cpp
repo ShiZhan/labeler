@@ -42,56 +42,37 @@ void dict_store(const char *dict_file, dict_t &dict) {
 	}
 }
 
-void permutate(dict_t &dict, uint64_t &id, char seperator) {
+void permutate(dict_t &dict, uint64_t &id, char seperator, std::istream &in, std::ostream &out) {
 	std::string line;
-	while (getline(std::cin, line)) {
+	while (getline(in, line)) {
 		std::stringstream ss(line);
 		std::string token;
 		while (getline(ss, token, seperator)) {
 			auto itr = dict.find(token);
 			if (itr == dict.end()) dict[token] = id++;
-			std::cout << dict[token] << " ";
+			out << dict[token] << " ";
 		}
-		std::cout << std::endl;
+		out << std::endl;
 	}
 }
 
-void permutate(const char *input_file, const char *output_file, dict_t &dict, uint64_t &id, char seperator) {
+void permutate(dict_t &dict, uint64_t &id, char seperator, const char *input_file, const char *output_file) {
 	if (input_file) {
 		std::ifstream ifs(input_file);
-		if (output_file) {
-			std::ofstream ofs(output_file);
-			if(ifs && ofs) {
-				std::string line;
-				while (getline(ifs, line)) {
-					std::stringstream ss(line);
-					std::string token;
-					while (getline(ss, token, seperator)) {
-						auto itr = dict.find(token);
-						if (itr == dict.end()) dict[token] = id++;
-						ofs << dict[token] << " ";
-					}
-					ofs << std::endl;
+		if (ifs) {
+			if (output_file) {
+				std::ofstream ofs(output_file);
+				if (ofs) {
+					permutate(dict, id, seperator, ifs, ofs);
+					ofs.close();
 				}
+				else permutate(dict, id, seperator, ifs, std::cout);
 			}
-			ofs.close();
-		}
-		else {
-			if(ifs) {
-				std::string line;
-				while (getline(ifs, line)) {
-					std::stringstream ss(line);
-					std::string token;
-					while (getline(ss, token, seperator)) {
-						auto itr = dict.find(token);
-						if (itr == dict.end()) dict[token] = id++;
-						std::cout << dict[token] << " ";
-					}
-					std::cout << std::endl;
-				}
+			else {
+				permutate(dict, id, seperator, ifs, std::cout);
 			}
+			ifs.close();
 		}
-		ifs.close();
 	}
 }
 
@@ -118,8 +99,8 @@ int main(int argc, char* argv[]) {
 	uint64_t id = dict_load(dict_file, dict);
 
 	char s = seperator ? seperator[0] : ' ';
-	if (input_file) permutate(input_file, output_file, dict, id, s);
-	else permutate(dict, id, s);
+	if (input_file) permutate(dict, id, s, input_file, output_file);
+	else permutate(dict, id, s, cin, cout);
 
 	dict_store(dict_file, dict);
 
