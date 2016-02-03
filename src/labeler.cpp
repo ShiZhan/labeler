@@ -74,6 +74,9 @@ void permutate(dict_t &dict, uint64_t &id, char seperator, const char *input_fil
 			ifs.close();
 		}
 	}
+	else {
+		permutate(dict, id, seperator, std::cin, std::cout);
+	}
 }
 
 int main(int argc, char* argv[]) {
@@ -99,8 +102,7 @@ int main(int argc, char* argv[]) {
 	uint64_t id = dict_load(dict_file, dict);
 
 	char s = seperator ? seperator[0] : ' ';
-	if (input_file) permutate(dict, id, s, input_file, output_file);
-	else permutate(dict, id, s, cin, cout);
+	permutate(dict, id, s, input_file, output_file);
 
 	dict_store(dict_file, dict);
 
