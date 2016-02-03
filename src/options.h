@@ -30,21 +30,9 @@ namespace opt {
 		return value;
 	}
 
-	uint64_t getUInt64(char** begin, char** end, const std::string& option, uint64_t d) {
-		uint64_t value = d;
-		char* str = getOption(begin, end, option);
-		if (str) {
-			try {
-				std::stringstream(str) >> value;
-			} catch(std::exception& e) {
-				std::cerr << e.what() << std::endl;
-			}
-		}
-		return value;
-	}
-
-	double getDouble(char** begin, char** end, const std::string& option, double d) {
-		double value = d;
+	template <typename T>
+	T getValue(char** begin, char** end, const std::string& option, T d) {
+		T value = d;
 		char* str = getOption(begin, end, option);
 		if (str) {
 			try {
