@@ -1,0 +1,2 @@
+source ./n-gram.conf
+$NGRAM -n 4 | sort | uniq -c
