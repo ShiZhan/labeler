@@ -15,9 +15,9 @@ n-gram: n-gram.cpp
 
 test:
 	make labeler
-	echo $(TEST_TEXT) | sed "s/[ ]*,[ ]*/\n/g; s/[ ]*\.//g" | ./labeler
+	echo $(TEST_TEXT) | ./text-alignment | ./labeler
 	make n-gram
-	echo $(TEST_TEXT) | sed "s/[ ]*,[ ]*/\n/g; s/[ ]*\.//g" | ./n-gram | sort | uniq -c
+	echo $(TEST_TEXT) | ./text-alignment | ./n-gram | sort | uniq -c
 
 clean:
 	rm *.exe *.o labeler n-gram
