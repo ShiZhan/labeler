@@ -2,7 +2,7 @@ CC = g++
 
 CXXFLAGS = --std=c++11 -O3
 
-TEST_TEXT = "jingle bells , jingle bells , jingle all the way."
+TEST_TEXT = "jingle bells, jingle bells, jingle all the way."
 
 all:
 	make labeler n-gram
@@ -15,9 +15,9 @@ n-gram: n-gram.cpp
 
 test:
 	make labeler
-	echo $(TEST_TEXT) | ./labeler
+	echo $(TEST_TEXT) | sed "s/[ ]*,[ ]*/\n/g; s/[ ]*\.//g" | ./labeler
 	make n-gram
-	echo $(TEST_TEXT) | ./n-gram | sort | uniq -c
+	echo $(TEST_TEXT) | sed "s/[ ]*,[ ]*/\n/g; s/[ ]*\.//g" | ./n-gram | sort | uniq -c
 
 clean:
 	rm *.exe *.o labeler n-gram
