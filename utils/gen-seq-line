@@ -1,0 +1,19 @@
+if [[ $# -lt 2 ]]; then
+  echo "Usage: script <length> <dict>"
+  exit 1
+fi
+
+length=$1
+ubound=$2
+return=$[ ubound-1 ]
+for (( i=0; i<$length; i++ ))
+do
+  r=$[ RANDOM % $ubound ]
+  if [[ $r -eq $return ]]; then
+    printf "$r\n"
+  else
+    printf "$r "
+  fi
+done
+
+printf "\n"

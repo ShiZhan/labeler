@@ -66,6 +66,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\options.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\n-gram.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
