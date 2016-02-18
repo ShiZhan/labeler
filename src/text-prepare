@@ -18,7 +18,7 @@ sed \
 # hyphen: merge lines, period: new line
 # ',', ';', ':', quotation mark, parentheses and brackets: expand
 sed \
-    -e "s/\(=\{3,\}\|-\{3,\}\|[#*]\+\)//g" \
+    -e "s/\(=\{3,\}\|-\{3,\}\|[#*]\+\)//g" -e "/[^[:print:]]/d" \
     -e "N;s/-\n//g" -e "s/[.!?][ \t]/ &\n/g" \
     -e "s/\([,;:<>{}()\"[]\|]\)/ & /g" |
 
