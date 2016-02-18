@@ -18,10 +18,13 @@ sed \
 # hyphen: merge lines, period: new line
 # ',', ';', ':', quotation mark, parentheses and brackets: expand
 sed \
-    -e "s/\(=\{3,\}\|-\{3,\}\|[#*]\+\)//g" -e "/[^[:print:]]/d" \
+    -e "s/\(=\{3,\}\|-\{3,\}\|[#*]\+\)//g" \
     -e "N;s/-\n//g" -e "s/[.!?][ \t]/ &\n/g" \
     -e "s/\([,;:<>{}()\"[]\|]\)/ & /g" |
 
 # trim space & remove empty line
-sed -e "s/\(^[ \t]\+\|[ \t]\+$\)//g" -e "s/[ \t]\{2,\}/ /g" -e "/^$/d"
+sed -e "s/\(^[ \t]\+\|[ \t]\+$\)//g" -e "s/[ \t]\{2,\}/ /g" -e "/^$/d" |
+
+# non-printable characters
+sed -e "/[^[:print:]]/d"
 
