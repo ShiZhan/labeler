@@ -1,0 +1,1 @@
+while read i; do printf "0x%08x\n" "$i"; done | xxd -r -p
