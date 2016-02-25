@@ -1,2 +1,8 @@
-source ./n-gram.conf
-$NGRAM -n 4 | sort | uniq -c
+[[ ! -d pipes ]] && mkdir pipes
+for p in `seq 0 9`; do [[ ! -p pipes/p$p ]] && mkfifo pipes/p$p; done
+sed -e '/^$/d' -e 's/\(^ \+\| \+$\)//g' -e 's/^/* * * /g' -e 's/ /\n/g' | tee pipes/p0 | tee pipes/p1 | tee pipes/p2 > pipes/p3 &
+cat pipes/p0 | tail -n+4             > pipes/p5 &
+cat pipes/p1 | tail -n+3 | head -n-1 > pipes/p6 &
+cat pipes/p2 | tail -n+2 | head -n-2 > pipes/p7 &
+cat pipes/p3 | head -n-3             > pipes/p8 &
+paste pipes/p8 pipes/p7 pipes/p6 pipes/p5 | sed -e '/*$/d' -e 's/\t/ /g'

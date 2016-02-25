@@ -1,2 +1,1 @@
-source ./n-gram.conf
-$NGRAM -n 1 | sort | uniq -c
+sed -e '/^$/d' -e 's/\(^ \+\| \+$\)//g' -e 's/ /\n/g' | sort | uniq -c
