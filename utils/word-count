@@ -6,7 +6,7 @@ while read count word; do
         sum=$count
         prev=$word
     else
-        sum=$(($sum + $count))
+        sum=$[ $sum + $count ]
     fi
 done
 printf "% 8d %s\n" $sum $prev

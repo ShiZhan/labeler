@@ -4,5 +4,5 @@ sed -e '/^$/d' -e 's/\(^ \+\| \+$\)//g' -e 's/^/* * * /g' -e 's/ /\n/g' | tee pi
 cat pipes/p0 | tail -n+4             > pipes/p5 &
 cat pipes/p1 | tail -n+3 | head -n-1 > pipes/p6 &
 cat pipes/p2 | tail -n+2 | head -n-2 > pipes/p7 &
-cat pipes/p3 | head -n-3             > pipes/p8 &
-paste pipes/p8 pipes/p7 pipes/p6 pipes/p5 | sed -e '/*$/d' -e 's/\t/ /g'
+cat pipes/p3             | head -n-3 > pipes/p8 &
+paste -d ' ' pipes/p8 pipes/p7 pipes/p6 pipes/p5 | sed -e '/*$/d'
