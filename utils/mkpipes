@@ -1,0 +1,29 @@
+# pipe management
+
+PIPE_DIR="/tmp/pipes"
+
+make_pipes() {
+  if [[ ! -d $PIPE_DIR ]]; then
+    mkdir $PIPE_DIR
+    for p in `seq 0 9`; do
+      [[ ! -p $PIPE_DIR/$p.fifo ]] && mkfifo $PIPE_DIR/$p.fifo
+    done
+  fi
+
+  export P0=$PIPE_DIR/0.fifo
+  export P1=$PIPE_DIR/1.fifo
+  export P2=$PIPE_DIR/2.fifo
+  export P3=$PIPE_DIR/3.fifo
+  export P4=$PIPE_DIR/4.fifo
+  export P5=$PIPE_DIR/5.fifo
+  export P6=$PIPE_DIR/6.fifo
+  export P7=$PIPE_DIR/7.fifo
+  export P8=$PIPE_DIR/8.fifo
+  export P9=$PIPE_DIR/9.fifo
+}
+
+clean_pipes() {
+  if [[ -d $PIPE_DIR ]]; then
+    rm -Rf $PIPE_DIR
+  fi
+}
