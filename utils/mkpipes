@@ -17,7 +17,6 @@ make_pipes() {
 }
 
 clean_pipes() {
-  if [[ -d $PIPE_DIR ]]; then
-    rm -Rf $PIPE_DIR
-  fi
+  [[ -d $PIPE_DIR ]] && rm -Rf $PIPE_DIR
+  for p in `seq 0 9`; do unset P$p; done
 }
