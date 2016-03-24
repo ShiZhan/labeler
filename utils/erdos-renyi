@@ -12,11 +12,9 @@ B=$[ 1 << $S ]           # block size
 C=$[ ($V*$D) >> ($S-3) ] # block total
 
 if [[ $C -eq 0 ]]; then
-  dd iflag=fullblock if=/dev/urandom bs=$[ $V*$D << 3 ] count=1 2> /dev/null \
-    | od -An -w16 -vtu4 \
-    | awk -v m=$M '{print and(m, $1)" "and(m, $2)"\n"and(m, $3)" "and(m, $4)}'
+  dd iflag=fullblock if=/dev/urandom bs=$[ $V*$D << 3 ] count=1 2> /dev/null
 else
-  dd iflag=fullblock if=/dev/urandom bs=$B count=$C 2> /dev/null \
-    | od -An -w16 -vtu4 \
-    | awk -v m=$M '{print and(m, $1)" "and(m, $2)"\n"and(m, $3)" "and(m, $4)}'
-fi
+  dd iflag=fullblock if=/dev/urandom bs=$B count=$C 2> /dev/null
+fi | od -An -w16 -vtu4 \
+   | awk -v m=$M '{print and(m, $1)" "and(m, $2)"\n"and(m, $3)" "and(m, $4)}'
+ 
