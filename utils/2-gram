@@ -1,6 +1,9 @@
-source ./mkpipes
-make_pipes
-sed -e '/^$/d' -e 's/\(^ \+\| \+$\)//g' -e 's/^/* /g' -e 's/ /\n/g' | tee $P0 > $P1 &
-cat $P0 | tail -n+2 > $P5 &
-cat $P1 | head -n-1 > $P6 &
-paste -d ' ' $P6 $P5 | sed -e '/*$/d'
+sed -e '/^$/d' -e 's/\(^ \+\| \+$\)//g' -e 's/^/* /g' -e 's/ /\n/g' \
+  | (
+      g0="*"
+      while read token; do
+        echo "$g0 $token"
+        g0=$token
+      done
+    ) \
+  | sed -e '/*$/d'
