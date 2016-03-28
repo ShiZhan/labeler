@@ -1,8 +1,8 @@
 sed -e '/^$/d' -e 's/\(^ \+\| \+$\)//g' -e 's/^/* * * /g' -e 's/ /\n/g' \
   | (
-      g0="*"
-      g1="*"
-      g2="*"
+      read g0
+      read g1
+      read g2
       while read token; do
         echo "$g0 $g1 $g2 $token"
         g0=$g1
