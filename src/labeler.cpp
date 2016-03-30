@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <stdint.h>
 #include "options.h"
 
 typedef std::map<std::string, uint64_t> dict_t;
